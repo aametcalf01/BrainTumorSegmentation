@@ -87,9 +87,12 @@ def rescale(in_file, out_file, minimum=0, maximum=20000):
 
 def get_image(subject_folder, name):
     file_card = os.path.join(subject_folder, "*" + name + "*.nii.gz")
+    print(name)
+
     try:
         return glob.glob(file_card)[0]
     except IndexError:
+        print(name)
         raise RuntimeError("Could not find file matching {}".format(file_card))
 
 
@@ -118,6 +121,7 @@ def normalize_image(in_file, out_file, bias_correction=True):
 def convert_brats_folder(in_folder, out_folder, truth_name="GlistrBoost_ManuallyCorrected",
                          no_bias_correction_modalities=None):
     for name in config["all_modalities"]:
+        print(name)
         image_file = get_image(in_folder, name)
         out_file = os.path.abspath(os.path.join(out_folder, name + ".nii.gz"))
         perform_bias_correction = no_bias_correction_modalities and name not in no_bias_correction_modalities
